@@ -1,0 +1,25 @@
+version: '3.6'
+
+services:
+  netlex-test-app:
+    build: .
+    command: npm start
+    ports:
+      - '3086:3086'
+    volumes:
+      - .:/usr/app
+  netlex-test-db:
+    image: mysql:5.7.31
+    container_name: "db-netlex-test"
+    command: --default-authentication-plugin=mysql_native_password --sql_mode=NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER --explicit_defaults_for_timestamp
+    restart: always
+    ports: 
+      - '3350:3306'
+    environment: 
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_HOST=localhost
+      - MYSQL_DATABASE=netlex-test
+      - MYSQL_USER=root
+      - MYSQL_LOCAL_PORT=3350
+      - MYSQL_DOCKER_PORT=3306
+      - TZ=America/Sao_Paulo
